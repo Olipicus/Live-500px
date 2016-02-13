@@ -8,4 +8,21 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <!-- Photo Item Style -->
+    <style name="photo_item">
+
+    </style>
+
+    <style name="photo_item.title" >
+        <item name="android:textSize">24dp</item>
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:maxLines">2</item>
+        <item name="android:ellipsize">end</item>
+    </style>
+
+    <style name="photo_item.detail" parent="photo_item.title">
+        <item name="android:textSize">16dp</item>
+
+    </style>
+
 </resources>
