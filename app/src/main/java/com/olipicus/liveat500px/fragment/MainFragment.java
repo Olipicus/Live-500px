@@ -5,14 +5,19 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 
 import com.olipicus.liveat500px.R;
+import com.olipicus.liveat500px.adapter.PhotoListAdapter;
 
 
 /**
  * Created by nuuneoi on 11/16/2014.
  */
 public class MainFragment extends Fragment {
+
+    ListView listView;
+    PhotoListAdapter listAdapter;
 
     public MainFragment() {
         super();
@@ -36,6 +41,9 @@ public class MainFragment extends Fragment {
     private void initInstances(View rootView) {
         // init instance with rootView.findViewById here
         //setRetainInstance(true);
+        listView = (ListView) rootView.findViewById(R.id.listView);
+        listAdapter = new PhotoListAdapter();
+        listView.setAdapter(listAdapter);
     }
 
     @Override
