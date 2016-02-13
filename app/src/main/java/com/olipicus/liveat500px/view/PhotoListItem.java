@@ -1,49 +1,55 @@
-package com.inthecheesefactory.thecheeselibrary.view;
+package com.olipicus.liveat500px.view;
 
 import android.annotation.TargetApi;
 import android.content.Context;
-import android.content.res.TypedArray;
-import android.graphics.Canvas;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.util.AttributeSet;
-import android.view.View;
 
-import com.inthecheesefactory.thecheeselibrary.R;
+import com.inthecheesefactory.thecheeselibrary.view.BaseCustomViewGroup;
 import com.inthecheesefactory.thecheeselibrary.view.state.BundleSavedState;
+
+import com.olipicus.liveat500px.R;
 
 /**
  * Created by nuuneoi on 11/16/2014.
  */
-public class CustomViewTemplate extends View {
+public class PhotoListItem extends BaseCustomViewGroup {
 
-    public CustomViewTemplate(Context context) {
+    public PhotoListItem(Context context) {
         super(context);
-        init();
+        initInflate();
+        initInstances();
     }
 
-    public CustomViewTemplate(Context context, AttributeSet attrs) {
+    public PhotoListItem(Context context, AttributeSet attrs) {
         super(context, attrs);
-        init();
+        initInflate();
+        initInstances();
         initWithAttrs(attrs, 0, 0);
     }
 
-    public CustomViewTemplate(Context context, AttributeSet attrs, int defStyleAttr) {
+    public PhotoListItem(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        init();
+        initInflate();
+        initInstances();
         initWithAttrs(attrs, defStyleAttr, 0);
     }
 
     @TargetApi(21)
-    public CustomViewTemplate(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public PhotoListItem(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
-        init();
+        initInflate();
+        initInstances();
         initWithAttrs(attrs, defStyleAttr, defStyleRes);
     }
 
-    private void init() {
-        setSaveEnabled(true);
+    private void initInflate() {
+        inflate(getContext(), R.layout.list_item_photo, this);
+    }
+
+    private void initInstances() {
+        // findViewById here
     }
 
     private void initWithAttrs(AttributeSet attrs, int defStyleAttr, int defStyleRes) {
@@ -59,11 +65,6 @@ public class CustomViewTemplate extends View {
             a.recycle();
         }
         */
-    }
-
-    @Override
-    protected void onDraw(Canvas canvas) {
-        super.onDraw(canvas);
     }
 
     @Override
