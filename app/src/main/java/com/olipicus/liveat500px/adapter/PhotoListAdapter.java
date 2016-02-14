@@ -26,6 +26,7 @@ public class PhotoListAdapter extends BaseAdapter {
         return 0;
     }
 
+    /*
     @Override
     public int getViewTypeCount() {
         return 2;
@@ -35,38 +36,22 @@ public class PhotoListAdapter extends BaseAdapter {
     public int getItemViewType(int position) {
         return position%2 == 0 ? 0 : 1;
     }
+    */
 
 
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
-        if(getItemViewType(position) == 0){
-            PhotoListItem item;
+        PhotoListItem item;
 
-            if (convertView != null){
-                item = (PhotoListItem) convertView;
-            }
-            else{
-                item = new PhotoListItem(parent.getContext());
-            }
-            return item;
-
+        if (convertView != null){
+            item = (PhotoListItem) convertView;
         }
         else{
-            TextView item;
-
-            if (convertView != null){
-                item = (TextView) convertView;
-            }
-            else{
-                item = new TextView(parent.getContext());
-            }
-            item.setText("Position : " + position);
-            return item;
+            item = new PhotoListItem(parent.getContext());
         }
-
-
+        return item;
 
     }
 }
