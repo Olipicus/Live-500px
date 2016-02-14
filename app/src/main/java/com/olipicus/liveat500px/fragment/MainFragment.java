@@ -6,9 +6,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.Toast;
 
+import com.inthecheesefactory.thecheeselibrary.manager.Contextor;
 import com.olipicus.liveat500px.R;
 import com.olipicus.liveat500px.adapter.PhotoListAdapter;
+import com.olipicus.liveat500px.dao.PhotoItemCollectionDao;
+import com.olipicus.liveat500px.manager.HttpManager;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 /**
@@ -44,6 +52,40 @@ public class MainFragment extends Fragment {
         listView = (ListView) rootView.findViewById(R.id.listView);
         listAdapter = new PhotoListAdapter();
         listView.setAdapter(listAdapter);
+
+        Call<PhotoItemCollectionDao> call = HttpManager.getInstance().getService().loadPhotoList();
+        call.enqueue(new Callback<PhotoItemCollectionDao>() {
+            @Override
+            public void onResponse(Call<PhotoItemCollectionDao> call,
+                                   Response<PhotoItemCollectionDao> response) {
+
+                if(response.isSuccess()){
+                    PhotoItemCollectionDao dao = response.body();
+                    Toast.makeText(Contextor.getInstance().getContext(),
+                            dao.getData().get(0).getCaption(),
+                            Toast.LENGTH_SHORT)
+                            .show();
+                }
+                else{
+                    Toast.makeText(Contextor.getInstance().getContext(),
+                            response.errorBody().toString(),
+                            Toast.LENGTH_SHORT)
+                            .show();
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(Call<PhotoItemCollectionDao> call,
+                                  Throwable t) {
+                Toast.makeText(Contextor.getInstance().getContext(),
+                        t.toString(),
+                        Toast.LENGTH_SHORT)
+                        .show();
+
+            }
+        });
     }
 
     @Override
