@@ -5,6 +5,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.olipicus.liveat500px.manager.PhotoListManager;
 import com.olipicus.liveat500px.view.PhotoListItem;
 
 /**
@@ -13,7 +14,10 @@ import com.olipicus.liveat500px.view.PhotoListItem;
 public class PhotoListAdapter extends BaseAdapter {
     @Override
     public int getCount() {
-        return 10000;
+        if(PhotoListManager.getInstance().getDao() == null || PhotoListManager.getInstance().getDao().getData() == null){
+            return 0;
+        }
+        return PhotoListManager.getInstance().getDao().getData().size();
     }
 
     @Override

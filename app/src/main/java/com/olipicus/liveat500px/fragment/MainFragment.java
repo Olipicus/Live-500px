@@ -13,6 +13,7 @@ import com.olipicus.liveat500px.R;
 import com.olipicus.liveat500px.adapter.PhotoListAdapter;
 import com.olipicus.liveat500px.dao.PhotoItemCollectionDao;
 import com.olipicus.liveat500px.manager.HttpManager;
+import com.olipicus.liveat500px.manager.PhotoListManager;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -61,6 +62,8 @@ public class MainFragment extends Fragment {
 
                 if(response.isSuccess()){
                     PhotoItemCollectionDao dao = response.body();
+                    PhotoListManager.getInstance().setDao(dao);
+                    listAdapter.notifyDataSetChanged();
                     Toast.makeText(Contextor.getInstance().getContext(),
                             dao.getData().get(0).getCaption(),
                             Toast.LENGTH_SHORT)
