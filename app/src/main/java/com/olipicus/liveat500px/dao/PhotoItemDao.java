@@ -15,7 +15,7 @@ public class PhotoItemDao {
     @SerializedName("image_url")        private String imageUrl;
     @SerializedName("caption")          private String caption;
     @SerializedName("user_id")          private String userId;
-    @SerializedName("user_name")        private String userName;
+    @SerializedName("username")        private String userName;
     @SerializedName("profile_picture")  private String profilePicture;
     @SerializedName("tag")              private List<String> tags = new ArrayList<String>();
     @SerializedName("created_time")     private Date createdTime;

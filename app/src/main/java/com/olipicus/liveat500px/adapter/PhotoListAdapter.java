@@ -3,8 +3,8 @@ package com.olipicus.liveat500px.adapter;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.TextView;
 
+import com.olipicus.liveat500px.dao.PhotoItemDao;
 import com.olipicus.liveat500px.manager.PhotoListManager;
 import com.olipicus.liveat500px.view.PhotoListItem;
 
@@ -22,7 +22,7 @@ public class PhotoListAdapter extends BaseAdapter {
 
     @Override
     public Object getItem(int position) {
-        return null;
+        return PhotoListManager.getInstance().getDao().getData().get(position);
     }
 
     @Override
@@ -55,6 +55,13 @@ public class PhotoListAdapter extends BaseAdapter {
         else{
             item = new PhotoListItem(parent.getContext());
         }
+
+        PhotoItemDao dao = (PhotoItemDao) getItem(position);
+
+        item.setName(dao.getCaption());
+        item.setDescription(dao.getUserName() + "\n" + dao.getCamera());
+        item.setImageUrl(dao.getImageUrl());
+
         return item;
 
     }

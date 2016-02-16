@@ -3,6 +3,7 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
     <ImageView
+        android:id="@+id/ivImg"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="centerCrop"
@@ -16,11 +17,13 @@
         android:background="#80000000"
         android:padding="16dp">
         <TextView
+            android:id="@+id/tvName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             style="@style/photo_item.title"
             android:text="NAME NAME NAME NAME NAME NAME NAME NAME NAME NAME NAME NAME NAME NAME NAME NAME NAME NAME NAME NAME NAME NAME NAME NAME NAME NAME NAME NAME NAME NAME NAME NAME NAME NAME NAME NAME " />
         <TextView
+            android:id="@+id/tvDescription"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             style="@style/photo_item.detail"
