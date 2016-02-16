@@ -8,6 +8,7 @@ import android.util.AttributeSet;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.inthecheesefactory.thecheeselibrary.view.BaseCustomViewGroup;
 import com.inthecheesefactory.thecheeselibrary.view.state.BundleSavedState;
 
@@ -123,6 +124,11 @@ public class PhotoListItem extends BaseCustomViewGroup {
     }
 
     public void setImageUrl(String url){
-        //Todo : Set Image Url
+
+        Glide.with(getContext())
+                .load(url)
+                .into(ivImg);
+
+
     }
 }
