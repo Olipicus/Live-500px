@@ -127,6 +127,7 @@ public class PhotoListItem extends BaseCustomViewGroup {
 
         Glide.with(getContext())
                 .load(url)
+                .placeholder(R.drawable.loading)
                 .into(ivImg);
 
 
