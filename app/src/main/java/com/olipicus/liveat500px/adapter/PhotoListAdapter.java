@@ -4,6 +4,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
+import com.olipicus.liveat500px.dao.PhotoItemCollectionDao;
 import com.olipicus.liveat500px.dao.PhotoItemDao;
 import com.olipicus.liveat500px.manager.PhotoListManager;
 import com.olipicus.liveat500px.view.PhotoListItem;
@@ -12,17 +13,24 @@ import com.olipicus.liveat500px.view.PhotoListItem;
  * Created by olipicus on 2/14/2016 AD.
  */
 public class PhotoListAdapter extends BaseAdapter {
+
+    PhotoItemCollectionDao dao;
+
+    public void setDao(PhotoItemCollectionDao dao) {
+        this.dao = dao;
+    }
+
     @Override
     public int getCount() {
-        if(PhotoListManager.getInstance().getDao() == null || PhotoListManager.getInstance().getDao().getData() == null){
+        if(this.dao == null || this.dao.getData() == null){
             return 0;
         }
-        return PhotoListManager.getInstance().getDao().getData().size();
+        return this.dao.getData().size();
     }
 
     @Override
     public Object getItem(int position) {
-        return PhotoListManager.getInstance().getDao().getData().get(position);
+        return this.dao.getData().get(position);
     }
 
     @Override
