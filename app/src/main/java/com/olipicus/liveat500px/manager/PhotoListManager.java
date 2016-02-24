@@ -10,14 +10,6 @@ import com.olipicus.liveat500px.dao.PhotoItemCollectionDao;
  */
 public class PhotoListManager {
 
-    private static PhotoListManager instance;
-
-    public static PhotoListManager getInstance() {
-        if (instance == null)
-            instance = new PhotoListManager();
-        return instance;
-    }
-
     private Context mContext;
     private PhotoItemCollectionDao dao;
 
@@ -29,8 +21,27 @@ public class PhotoListManager {
         this.dao = dao;
     }
 
-    private PhotoListManager() {
+    public PhotoListManager() {
         mContext = Contextor.getInstance().getContext();
+    }
+
+    public int getMaximunId(){
+        if (dao == null || dao.getData() == null || dao.getData().size() == 0){
+            return 0;
+        }
+        int maxId = dao.getData().get(0).getId();
+        for(int i = 0; i < dao.getData().size(); i ++){
+            maxId = Math.max(maxId, dao.getData().get(i).getId());
+        }
+        return maxId;
+
+    }
+
+    public int getCount(){
+        if(dao == null || dao.getData() == null){
+            return 0;
+        }
+        return  dao.getData().size();
     }
 
 }
