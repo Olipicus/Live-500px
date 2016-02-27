@@ -4,6 +4,9 @@ import android.content.Context;
 
 import com.inthecheesefactory.thecheeselibrary.manager.Contextor;
 import com.olipicus.liveat500px.dao.PhotoItemCollectionDao;
+import com.olipicus.liveat500px.dao.PhotoItemDao;
+
+import java.util.ArrayList;
 
 /**
  * Created by nuuneoi on 11/16/2014.
@@ -19,6 +22,18 @@ public class PhotoListManager {
 
     public void setDao(PhotoItemCollectionDao dao) {
         this.dao = dao;
+    }
+
+    public void insertDaoAtTopPosition(PhotoItemCollectionDao newDao){
+        if(dao == null){
+            dao = new PhotoItemCollectionDao();
+        }
+
+        if(dao.getData() == null){
+            dao.setData(new ArrayList<PhotoItemDao>());
+        }
+
+        dao.getData().addAll(0, newDao.getData());
     }
 
     public PhotoListManager() {
