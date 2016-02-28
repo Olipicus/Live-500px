@@ -3,6 +3,7 @@ package com.olipicus.liveat500px.fragment;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,6 +39,8 @@ public class MainFragment extends Fragment {
     PhotoListManager photoListManager;
 
     Button btnNewPhoto;
+
+    Boolean isLoadingMore = false;
 
     public MainFragment() {
         super();
@@ -95,6 +98,14 @@ public class MainFragment extends Fragment {
                                  int visibleItemCount,
                                  int totalItemCount) {
                 swipeRefreshLayout.setEnabled(firstVisibleItem == 0);
+
+                //Control Endless Scroll
+                if(firstVisibleItem + visibleItemCount >= totalItemCount){
+                    if(photoListManager.getCount() > 0){
+                        loadMoreData();
+                    }
+                }
+
             }
         });
 
@@ -114,6 +125,7 @@ public class MainFragment extends Fragment {
 
         public static final int MODE_RELOAD = 1;
         public static final int MODE_RELOAD_NEWER = 2;
+        public static final int MODE_LOAD_MORE = 3;
 
         private int mode;
 
@@ -134,6 +146,10 @@ public class MainFragment extends Fragment {
 
                 if(this.mode == this.MODE_RELOAD_NEWER){
                     photoListManager.insertDaoAtTopPosition(dao);
+                }
+                else if(this.mode == this.MODE_LOAD_MORE){
+                    photoListManager.appendDaoAtBottomPosition(dao);
+                    isLoadingMore = false;
                 }
                 else{
                     photoListManager.setDao(dao);
@@ -163,6 +179,11 @@ public class MainFragment extends Fragment {
                         .show();
             }
             else{
+
+                if(this.mode == MODE_LOAD_MORE){
+                    isLoadingMore = false;
+                }
+
                 Toast.makeText(Contextor.getInstance().getContext(),
                         response.errorBody().toString(),
                         Toast.LENGTH_SHORT)
@@ -172,12 +193,28 @@ public class MainFragment extends Fragment {
 
         @Override
         public void onFailure(Call<PhotoItemCollectionDao> call, Throwable t) {
+
+            if(this.mode == MODE_LOAD_MORE){
+                isLoadingMore = false;
+            }
+
             swipeRefreshLayout.setRefreshing(false);
             Toast.makeText(Contextor.getInstance().getContext(),
                     t.toString(),
                     Toast.LENGTH_SHORT)
                     .show();
         }
+    }
+
+    private void loadMoreData(){
+        if(isLoadingMore){
+            return ;
+        }
+        isLoadingMore = true;
+        int minId = photoListManager.getMinimunId();
+        Call<PhotoItemCollectionDao> call = HttpManager.getInstance().getService().loadPhotoListBeforeId(minId);
+        call.enqueue(new PhotoListLoadCallback(PhotoListLoadCallback.MODE_LOAD_MORE));
+
     }
 
     private void reloadDataNewer(){
