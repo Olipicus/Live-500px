@@ -12,14 +12,19 @@ import com.olipicus.liveat500px.dao.PhotoItemCollectionDao;
 import com.olipicus.liveat500px.dao.PhotoItemDao;
 import com.olipicus.liveat500px.view.PhotoListItem;
 
+import datatype.MutableInteger;
+
 /**
  * Created by olipicus on 2/14/2016 AD.
  */
 public class PhotoListAdapter extends BaseAdapter {
 
     PhotoItemCollectionDao dao;
+    MutableInteger lastPositionInteger;
 
-    int lastPosition = -1;
+    public PhotoListAdapter(MutableInteger lastPositionInteger) {
+        this.lastPositionInteger = lastPositionInteger;
+    }
 
     public void setDao(PhotoItemCollectionDao dao) {
         this.dao = dao;
@@ -85,10 +90,10 @@ public class PhotoListAdapter extends BaseAdapter {
         item.setDescription(dao.getUserName() + "\n" + dao.getCamera());
         item.setImageUrl(dao.getImageUrl());
 
-        if(position > lastPosition){
+        if(position > lastPositionInteger.getValue()){
             Animation anim = AnimationUtils.loadAnimation(parent.getContext(), R.anim.up_from_buttom);
             item.startAnimation(anim);
-            lastPosition = position;
+            lastPositionInteger.setValue(position);
         }
 
 
@@ -97,6 +102,6 @@ public class PhotoListAdapter extends BaseAdapter {
     }
 
     public void increaseLastPosition(int amount){
-        this.lastPosition += amount;
+        lastPositionInteger.setValue(lastPositionInteger.getValue() + amount);
     }
 }

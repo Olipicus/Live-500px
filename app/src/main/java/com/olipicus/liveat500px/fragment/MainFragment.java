@@ -21,6 +21,7 @@ import com.olipicus.liveat500px.dao.PhotoItemCollectionDao;
 import com.olipicus.liveat500px.manager.HttpManager;
 import com.olipicus.liveat500px.manager.PhotoListManager;
 
+import datatype.MutableInteger;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -37,6 +38,7 @@ public class MainFragment extends Fragment {
     SwipeRefreshLayout swipeRefreshLayout;
 
     PhotoListManager photoListManager;
+    MutableInteger lastPositionInteger;
 
     Button btnNewPhoto;
 
@@ -74,6 +76,7 @@ public class MainFragment extends Fragment {
 
     private void init(Bundle savedInstanceState) {
         photoListManager = new PhotoListManager();
+        lastPositionInteger = new MutableInteger(-1);
     }
 
     private void initInstances(View rootView, Bundle savedInstanceState) {
@@ -84,7 +87,7 @@ public class MainFragment extends Fragment {
         btnNewPhoto.setOnClickListener(buttonClickListener);
 
         listView = (ListView) rootView.findViewById(R.id.listView);
-        listAdapter = new PhotoListAdapter();
+        listAdapter = new PhotoListAdapter(lastPositionInteger);
         listAdapter.setDao(photoListManager.getDao());
         listView.setAdapter(listAdapter);
 
@@ -154,11 +157,13 @@ public class MainFragment extends Fragment {
         super.onSaveInstanceState(outState);
         //Save Instance State Here
         outState.putBundle("photoListManager", photoListManager.onSavedInstanceState());
+        outState.putBundle("lastPositionInteger", lastPositionInteger.onSavedInstanceState());
     }
 
     private void onRestoreInstanceState(Bundle savedInstanceState){
         //Restore Instance State Here
         photoListManager.onRestoreInstanceState(savedInstanceState.getBundle("photoListManager"));
+        lastPositionInteger.onRestoreInstanceState(savedInstanceState.getBundle("lastPositionInteger"));
     }
 
     /*
