@@ -23,7 +23,10 @@
             android:name="com.olipicus.liveat500px.configuration.GlideConfiguration"
             android:value="GlideModule" />
 
-        <activity android:name=".activity.MoreInfoActivity"></activity>
+        <activity android:name=".activity.MoreInfoActivity"
+            android:theme="@style/AppThemeWithActionBar">
+
+        </activity>
     </application>
 
 </manifest>
