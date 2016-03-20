@@ -1,5 +1,6 @@
 package com.olipicus.liveat500px.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -10,12 +11,14 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.AbsListView;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import com.inthecheesefactory.thecheeselibrary.manager.Contextor;
 import com.olipicus.liveat500px.R;
+import com.olipicus.liveat500px.activity.MoreInfoActivity;
 import com.olipicus.liveat500px.adapter.PhotoListAdapter;
 import com.olipicus.liveat500px.dao.PhotoItemCollectionDao;
 import com.olipicus.liveat500px.manager.HttpManager;
@@ -87,6 +90,7 @@ public class MainFragment extends Fragment {
         btnNewPhoto.setOnClickListener(buttonClickListener);
 
         listView = (ListView) rootView.findViewById(R.id.listView);
+        listView.setOnItemClickListener(listViewItemClickListener);
         listAdapter = new PhotoListAdapter(lastPositionInteger);
         listAdapter.setDao(photoListManager.getDao());
         listView.setAdapter(listAdapter);
@@ -199,6 +203,16 @@ public class MainFragment extends Fragment {
                 hideButtonNewPhoto();
                 listView.smoothScrollToPosition(0);
             }
+        }
+    };
+
+    final AdapterView.OnItemClickListener listViewItemClickListener = new AdapterView.OnItemClickListener() {
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            //Toast.makeText(getContext(), "Position : " + position, Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(getContext(), MoreInfoActivity.class);
+            startActivity(intent);
+
         }
     };
 
