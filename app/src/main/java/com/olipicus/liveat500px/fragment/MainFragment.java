@@ -21,6 +21,7 @@ import com.olipicus.liveat500px.R;
 import com.olipicus.liveat500px.activity.MoreInfoActivity;
 import com.olipicus.liveat500px.adapter.PhotoListAdapter;
 import com.olipicus.liveat500px.dao.PhotoItemCollectionDao;
+import com.olipicus.liveat500px.dao.PhotoItemDao;
 import com.olipicus.liveat500px.manager.HttpManager;
 import com.olipicus.liveat500px.manager.PhotoListManager;
 
@@ -34,6 +35,10 @@ import retrofit2.Response;
  * Created by nuuneoi on 11/16/2014.
  */
 public class MainFragment extends Fragment {
+
+    public interface FragmentListener {
+        void onPhotoItemClicked(PhotoItemDao dao);
+    }
 
     ListView listView;
     PhotoListAdapter listAdapter;
@@ -210,8 +215,13 @@ public class MainFragment extends Fragment {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             //Toast.makeText(getContext(), "Position : " + position, Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(getContext(), MoreInfoActivity.class);
-            startActivity(intent);
+            //Intent intent = new Intent(getContext(), MoreInfoActivity.class);
+            //startActivity(intent);
+            if(position < photoListManager.getCount()){
+                PhotoItemDao dao = photoListManager.getDao().getData().get(position);
+                FragmentListener listener = (FragmentListener)getActivity();
+                listener.onPhotoItemClicked(dao);
+            }
 
         }
     };
